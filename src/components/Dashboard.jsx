@@ -53,22 +53,22 @@ const Dashboard = ({ user, toggleTheme, currentTheme }) => {
       <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
         <h1>Zenith List</h1>
         <div>
-          <Link to="/progress"><button>View Progress 📊</button></Link>
-          <Link to="/calendar" style={{ marginLeft: '10px' }}><button>View Calendar 📅</button></Link>
+          <Link to="/progress"><button>View Progress </button></Link>
+          <Link to="/calendar" style={{ marginLeft: '10px' }}><button>View Calendar </button></Link>
         </div>
         <div className="score-display">
-          <strong>Today's Score: {userData ? userData.zenithScore : 0} ⚡</strong>
+          <strong> Score: {userData ? userData.zenithScore : 0} ⚡</strong>
         </div>
         <button onClick={toggleTheme} style={{ marginTop: '10px' }}>
           Switch to {currentTheme === 'light' ? 'Dark' : 'Light'} Mode
         </button>
+              <button onClick={handleLogout}>Log Out</button>
+
       </div>
-      <p>Welcome, {user.email}!</p>
-      <button onClick={handleLogout}>Log Out</button>
-      <hr />
+      
       <h2>Create a New Task</h2>
       <AddTaskForm user={user} />
-      <hr />
+     
       <div className="task-controls" style={{ margin: '20px 0', display: 'flex', flexDirection: 'column', gap: '15px' }}>
         <input
           type="search"

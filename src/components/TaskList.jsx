@@ -27,18 +27,26 @@ const TaskList = ({ user, filter, sortBy, searchQuery }) => {
   }, [user]);
 
   const processedTasks = useMemo(() => {
-    return tasks
+    const filtered = tasks
       .filter(task =>
         task.text.toLowerCase().includes(searchQuery.toLowerCase())
       )
       .filter(task => {
-        const isCompletedToday = task.type === 'daily' && task.lastCompleted && isSameDay(task.lastCompleted.toDate(), new Date());
-        const isComplete = task.type === 'one-time' ? task.completed : isCompletedToday;
+        // Unified "isComplete" logic
+        let isComplete = false;
+        if (task.type === 'one-time') {
+          isComplete = task.completed;
+        } else { // daily task
+          isComplete = task.lastCompleted && isSameDay(task.lastCompleted.toDate(), new Date());
+        }
+        
         if (filter === 'completed') return isComplete;
         if (filter === 'active') return !isComplete;
-        return true;
-      })
-      .sort((a, b) => {
+        return true; // for 'all'
+      });
+
+    const sortTasks = (taskArray) => {
+      return taskArray.sort((a, b) => {
         if (sortBy === 'dueDate_asc') {
           if (!a.dueDate) return 1;
           if (!b.dueDate) return -1;
@@ -49,20 +57,47 @@ const TaskList = ({ user, filter, sortBy, searchQuery }) => {
         }
         return b.createdAt?.toDate() - a.createdAt?.toDate();
       });
+    };
+
+    const daily = sortTasks(filtered.filter(task => task.type === 'daily'));
+    const oneTime = sortTasks(filtered.filter(task => task.type === 'one-time'));
+
+    return { daily, oneTime };
   }, [tasks, filter, sortBy, searchQuery]);
 
   return (
     <div className="task-list-container">
-      <h3>Your Tasks ({processedTasks.length})</h3>
-      <ul className="task-list" style={{ padding: 0 }}>
-        {processedTasks.length > 0 ? (
-          processedTasks.map((task) => (
-            <TaskItem key={task.id} task={task} />
-          ))
-        ) : (
-          <p>No tasks found. Try adjusting your search or filters!</p>
-        )}
-      </ul>
+      <div className="daily-tasks-section">
+        <h3>
+          <i className="bi bi-arrow-repeat" style={{ marginRight: '10px' }}></i>
+          Daily Habits ({processedTasks.daily.length})
+        </h3>
+        <ul className="task-list" style={{ padding: 0 }}>
+          {processedTasks.daily.length > 0 ? (
+            processedTasks.daily.map((task) => (
+              <TaskItem key={task.id} task={task} />
+            ))
+          ) : (
+            <p style={{ paddingLeft: '1rem', color: '#888' }}>No daily habits match your filters.</p>
+          )}
+        </ul>
+      </div>
+
+      <div className="one-time-tasks-section" style={{ marginTop: '2rem' }}>
+        <h3>
+          <i className="bi bi-check2-square" style={{ marginRight: '10px' }}></i>
+          One-Time Tasks ({processedTasks.oneTime.length})
+        </h3>
+        <ul className="task-list" style={{ padding: 0 }}>
+          {processedTasks.oneTime.length > 0 ? (
+            processedTasks.oneTime.map((task) => (
+              <TaskItem key={task.id} task={task} />
+            ))
+          ) : (
+            <p style={{ paddingLeft: '1rem', color: '#888' }}>No one-time tasks match your filters.</p>
+          )}
+        </ul>
+      </div>
     </div>
   );
 };

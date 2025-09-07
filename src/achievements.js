@@ -1,4 +1,3 @@
-// src/achievements.js
 export const achievements = [
   {
     id: 'first_step',

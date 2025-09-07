@@ -1,11 +1,10 @@
-// src/App.jsx
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'; // Make sure BrowserRouter is here
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'; 
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
 import './App.css';
-import ProgressView from './components/ProgressView'; // 1. Import the new component
-
+import ProgressView from './components/ProgressView'; 
+import 'react-datepicker/dist/react-datepicker.css';
 import { Toaster } from 'react-hot-toast';
 import Signup from './components/Signup';
 import Login from './components/Login';
@@ -39,7 +38,7 @@ function App() {
 
   return (
     <>
-    <BrowserRouter> {/* This line causes the error if not imported */}
+    <BrowserRouter> {}
       <Routes>
         <Route path="/" element={currentUser ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
         <Route path="/login" element={currentUser ? <Navigate to="/dashboard" /> : <Login />} />

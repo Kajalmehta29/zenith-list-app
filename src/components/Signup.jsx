@@ -1,4 +1,3 @@
-// src/components/SignUp.jsx
 import React, { useState } from 'react';
 import { auth, db } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -31,7 +30,7 @@ const SignUp = () => {
   };
 
   return (
-    <div>
+    <div className="form-container">
       <h2>Sign Up</h2>
       <form onSubmit={handleSignUp}>
         <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
