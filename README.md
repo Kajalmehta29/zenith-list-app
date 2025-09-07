@@ -6,7 +6,7 @@
 
 ### 🚀 Live Demo
 
-**[View the live application here!](zenith-list-app.vercel.app)**
+**[View the live application here!](https://zenith-list-app.vercel.app)**
 
 
 ---
