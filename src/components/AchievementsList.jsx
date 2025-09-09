@@ -1,13 +1,15 @@
 // src/components/AchievementsList.jsx
+
 import React from 'react';
 import { achievements } from '../achievements';
 
 const AchievementsList = ({ unlockedIds = [] }) => {
+  // No changes needed here
   const unlockedAchievements = achievements.filter(a => unlockedIds.includes(a.id));
 
   return (
     <div>
-      <h2>🏆 Achievements Unlocked ({unlockedAchievements.length} / {achievements.length})</h2>
+      <h2> Achievements Unlocked ({unlockedAchievements.length} / {achievements.length})</h2>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
         {achievements.map(ach => (
           <div 
@@ -19,10 +21,12 @@ const AchievementsList = ({ unlockedIds = [] }) => {
               borderRadius: '8px', 
               textAlign: 'center',
               opacity: unlockedIds.includes(ach.id) ? 1 : 0.3,
+              width: '100px', 
             }}
           >
-            <span style={{ fontSize: '2.5rem' }}>{ach.emoji}</span>
-            <p style={{ margin: 0, fontWeight: 'bold' }}>{ach.title}</p>
+            <i className={ach.icon} style={{ fontSize: '2.5rem' }}></i>
+            
+            <p style={{ margin: 0, marginTop: '5px', fontWeight: 'bold' }}>{ach.title}</p>
           </div>
         ))}
       </div>

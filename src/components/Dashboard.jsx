@@ -57,7 +57,7 @@ const Dashboard = ({ user, toggleTheme, currentTheme }) => {
           <Link to="/calendar" style={{ marginLeft: '10px' }}><button>View Calendar </button></Link>
         </div>
         <div className="score-display">
-          <strong> Score: {userData ? userData.zenithScore : 0} ⚡</strong>
+          <strong>Today's Score: {userData ? userData.zenithScore : 0} </strong>
         </div>
         <button onClick={toggleTheme} style={{ marginTop: '10px' }}>
           Switch to {currentTheme === 'light' ? 'Dark' : 'Light'} Mode
